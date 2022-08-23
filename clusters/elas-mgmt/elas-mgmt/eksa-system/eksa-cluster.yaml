@@ -1,0 +1,142 @@
+apiVersion: anywhere.eks.amazonaws.com/v1alpha1
+kind: Cluster
+metadata:
+  name: elas-mgmt
+  namespace: default
+spec:
+  bundlesRef:
+    apiVersion: anywhere.eks.amazonaws.com/v1alpha1
+    name: bundles-14
+    namespace: eksa-system
+  clusterNetwork:
+    cniConfig:
+      cilium: {}
+    pods:
+      cidrBlocks:
+      - 192.168.0.0/16
+    services:
+      cidrBlocks:
+      - 10.96.0.0/12
+  controlPlaneConfiguration:
+    count: 2
+    endpoint:
+      host: 10.2.0.50
+    machineGroupRef:
+      kind: VSphereMachineConfig
+      name: elas-mgmt-cp
+  datacenterRef:
+    kind: VSphereDatacenterConfig
+    name: elas-mgmt
+  externalEtcdConfiguration:
+    count: 3
+    machineGroupRef:
+      kind: VSphereMachineConfig
+      name: elas-mgmt-etcd
+  gitOpsRef:
+    kind: FluxConfig
+    name: elas-mgmt
+  kubernetesVersion: "1.23"
+  managementCluster:
+    name: elas-mgmt
+  podIamConfig:
+    serviceAccountIssuer: https://s3-us-west-2.amazonaws.com/oidc-test-ogexxaquuxrhhjlzauhjqwikbucpmari
+  workerNodeGroupConfigurations:
+  - count: 2
+    machineGroupRef:
+      kind: VSphereMachineConfig
+      name: elas-mgmt
+    name: md-0
+
+---
+apiVersion: anywhere.eks.amazonaws.com/v1alpha1
+kind: VSphereDatacenterConfig
+metadata:
+  name: elas-mgmt
+  namespace: default
+spec:
+  datacenter: SDDC-Datacenter
+  insecure: false
+  network: /SDDC-Datacenter/network/eks-workload-network
+  server: vcenter.sddc-23-20-105-155.vmwarevmc.com
+  thumbprint: CB:3A:24:5D:F6:4E:DE:C2:01:48:1F:F2:D0:74:4E:B9:4B:B4:D9:92
+
+---
+apiVersion: anywhere.eks.amazonaws.com/v1alpha1
+kind: VSphereMachineConfig
+metadata:
+  annotations:
+    anywhere.eks.amazonaws.com/control-plane: "true"
+  name: elas-mgmt-cp
+  namespace: default
+spec:
+  datastore: /SDDC-Datacenter/datastore/WorkloadDatastore
+  diskGiB: 25
+  folder: /SDDC-Datacenter/vm/Clusters/elamaras
+  memoryMiB: 8192
+  numCPUs: 2
+  osFamily: bottlerocket
+  resourcePool: /SDDC-Datacenter/host/Cluster-1/Resources/Compute-ResourcePool
+  template: /SDDC-Datacenter/vm/Templates/bottlerocket-v1.23.7-kubernetes-1-23-eks-4-amd64-7d2448f
+  users:
+  - name: ec2-user
+    sshAuthorizedKeys:
+    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCXx8GWLQyXT17OcoF6RetyFK6rBw6LHoiTfs2LcBFfVhXt/PiqK3bJhFMFJqKMKXX8O+MLbQgCQKdfg8acemcRr3WhArtjcGauqg01V4w8Wwy+vHYiQ5SuxNdnwUla2+wqezV31+NjYQI1wdJtqSuCupIpVukJ+HI8aAT2JZV9CVRwXT0JLKNc25P+xGe83rwYTg80juNammT0qQPpRKakG36ajAQwJ/oC4zqLmekXx5oHbY/8yCW2zHufmN34dHefCXY4Bk1D2mxEvXJZoZiH0IiqrALOWRgAw+sKppxZpyo6ASugcdV7M82jAeboN4h9HF4cJrKHafoDfq8QPkhtrOBlHyoGc6ZX7IzfldLIgxqQ/6j/YAGeK4g4n4zMwrj53oCHN6/thl/uSq/tzgPciRU7mg05TxIlnM/7gn6bHyGdtPPYwhmfnPPDiaV3EfMOBFfpVXjmDHl4ssZpP++01MU7xdNeYGPKMvzvwQ988VnRzHEaacSXuN0qgopxDBk=
+
+---
+apiVersion: anywhere.eks.amazonaws.com/v1alpha1
+kind: VSphereMachineConfig
+metadata:
+  annotations:
+    anywhere.eks.amazonaws.com/etcd: "true"
+  name: elas-mgmt-etcd
+  namespace: default
+spec:
+  datastore: /SDDC-Datacenter/datastore/WorkloadDatastore
+  diskGiB: 25
+  folder: /SDDC-Datacenter/vm/Clusters/elamaras
+  memoryMiB: 8192
+  numCPUs: 2
+  osFamily: bottlerocket
+  resourcePool: /SDDC-Datacenter/host/Cluster-1/Resources/Compute-ResourcePool
+  template: /SDDC-Datacenter/vm/Templates/bottlerocket-v1.23.7-kubernetes-1-23-eks-4-amd64-7d2448f
+  users:
+  - name: ec2-user
+    sshAuthorizedKeys:
+    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCXx8GWLQyXT17OcoF6RetyFK6rBw6LHoiTfs2LcBFfVhXt/PiqK3bJhFMFJqKMKXX8O+MLbQgCQKdfg8acemcRr3WhArtjcGauqg01V4w8Wwy+vHYiQ5SuxNdnwUla2+wqezV31+NjYQI1wdJtqSuCupIpVukJ+HI8aAT2JZV9CVRwXT0JLKNc25P+xGe83rwYTg80juNammT0qQPpRKakG36ajAQwJ/oC4zqLmekXx5oHbY/8yCW2zHufmN34dHefCXY4Bk1D2mxEvXJZoZiH0IiqrALOWRgAw+sKppxZpyo6ASugcdV7M82jAeboN4h9HF4cJrKHafoDfq8QPkhtrOBlHyoGc6ZX7IzfldLIgxqQ/6j/YAGeK4g4n4zMwrj53oCHN6/thl/uSq/tzgPciRU7mg05TxIlnM/7gn6bHyGdtPPYwhmfnPPDiaV3EfMOBFfpVXjmDHl4ssZpP++01MU7xdNeYGPKMvzvwQ988VnRzHEaacSXuN0qgopxDBk=
+
+---
+apiVersion: anywhere.eks.amazonaws.com/v1alpha1
+kind: VSphereMachineConfig
+metadata:
+  name: elas-mgmt
+  namespace: default
+spec:
+  datastore: /SDDC-Datacenter/datastore/WorkloadDatastore
+  diskGiB: 25
+  folder: /SDDC-Datacenter/vm/Clusters/elamaras
+  memoryMiB: 8192
+  numCPUs: 2
+  osFamily: bottlerocket
+  resourcePool: /SDDC-Datacenter/host/Cluster-1/Resources/Compute-ResourcePool
+  template: /SDDC-Datacenter/vm/Templates/bottlerocket-v1.23.7-kubernetes-1-23-eks-4-amd64-7d2448f
+  users:
+  - name: ec2-user
+    sshAuthorizedKeys:
+    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCXx8GWLQyXT17OcoF6RetyFK6rBw6LHoiTfs2LcBFfVhXt/PiqK3bJhFMFJqKMKXX8O+MLbQgCQKdfg8acemcRr3WhArtjcGauqg01V4w8Wwy+vHYiQ5SuxNdnwUla2+wqezV31+NjYQI1wdJtqSuCupIpVukJ+HI8aAT2JZV9CVRwXT0JLKNc25P+xGe83rwYTg80juNammT0qQPpRKakG36ajAQwJ/oC4zqLmekXx5oHbY/8yCW2zHufmN34dHefCXY4Bk1D2mxEvXJZoZiH0IiqrALOWRgAw+sKppxZpyo6ASugcdV7M82jAeboN4h9HF4cJrKHafoDfq8QPkhtrOBlHyoGc6ZX7IzfldLIgxqQ/6j/YAGeK4g4n4zMwrj53oCHN6/thl/uSq/tzgPciRU7mg05TxIlnM/7gn6bHyGdtPPYwhmfnPPDiaV3EfMOBFfpVXjmDHl4ssZpP++01MU7xdNeYGPKMvzvwQ988VnRzHEaacSXuN0qgopxDBk=
+
+---
+apiVersion: anywhere.eks.amazonaws.com/v1alpha1
+kind: FluxConfig
+metadata:
+  name: elas-mgmt
+  namespace: default
+spec:
+  branch: main
+  clusterConfigPath: clusters/elas-mgmt
+  github:
+    owner: elamaran11
+    personal: true
+    repository: eksa-elamaras-vmc-gitops-repo
+  systemNamespace: flux-system
+
+---
