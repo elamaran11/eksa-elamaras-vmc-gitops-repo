@@ -1,0 +1,27 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kubecost
+  namespace: kubecost
+spec:
+  interval: 1m
+  chart:
+    spec:
+      chart: cost-analyzer
+      version: "v1.79.1"
+      sourceRef:
+        kind: HelmRepository
+        name: kubecost-charts
+        namespace: flux-system
+      interval: 1m
+  values:
+    networkCosts:
+      enabled: true
+    kubecostProductConfigs:
+      clusterName: my-k8-cluster
+      projectID: florian-test-297317
+      bigQueryBillingDataDataset: all_billing_data.gcp_billing_export_v1_01CFD3_461BC7_F1F47F
+      serviceKeySecretName: gcp-secret
+    global:
+      thanos:
+        enabled: false
