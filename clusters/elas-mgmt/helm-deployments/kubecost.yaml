@@ -15,11 +15,9 @@ spec:
         namespace: flux-system
       interval: 1m
   values:
+    kubecostToken: "ZWxhbWFyYXNAYW1hem9uLmNvbQ==xm343yadf98"
     networkCosts:
       enabled: true
-    kubecostProductConfigs:
-      clusterName: elas-mgmt
-      serviceKeySecretName: gcp-secret
     global:
       thanos:
         enabled: false
