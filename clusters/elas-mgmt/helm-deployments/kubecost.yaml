@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: cost-analyzer
-      version: "v1.79.1"
+      version: "1.92.0"
       sourceRef:
         kind: HelmRepository
         name: kubecost-charts
@@ -18,9 +18,7 @@ spec:
     networkCosts:
       enabled: true
     kubecostProductConfigs:
-      clusterName: my-k8-cluster
-      projectID: florian-test-297317
-      bigQueryBillingDataDataset: all_billing_data.gcp_billing_export_v1_01CFD3_461BC7_F1F47F
+      clusterName: elas-mgmt
       serviceKeySecretName: gcp-secret
     global:
       thanos:
