@@ -38,8 +38,6 @@ spec:
   kubernetesVersion: "1.23"
   managementCluster:
     name: elas-mgmt
-  podIamConfig:
-    serviceAccountIssuer: https://s3-us-west-2.amazonaws.com/oidc-test-ogexxaquuxrhhjlzauhjqwikbucpmari
   workerNodeGroupConfigurations:
   - count: 2
     machineGroupRef:
