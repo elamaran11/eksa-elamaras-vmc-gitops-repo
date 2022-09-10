@@ -1,6 +1,0 @@
-kubecostToken: "ZWxhbWFyYXNAYW1hem9uLmNvbQ==xm343yadf98"
-networkCosts:
-  enabled: true
-global:
-  thanos:
-    enabled: false
