@@ -14,6 +14,8 @@ spec:
         name: kubecost-charts
         namespace: flux-system
       version: 1.92.0
+  install:
+    createNamespace: true
   interval: 1m0s
   values:
     global:
