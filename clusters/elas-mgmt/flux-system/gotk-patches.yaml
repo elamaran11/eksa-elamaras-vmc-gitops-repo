@@ -7,7 +7,7 @@ spec:
   template:
     spec:
       containers:
-      - image: public.ecr.aws/eks-anywhere/fluxcd/source-controller:v0.25.9-eks-a-14
+      - image: public.ecr.aws/eks-anywhere/fluxcd/source-controller:v0.25.9-eks-a-20
         name: manager
 ---
 apiVersion: apps/v1
@@ -19,7 +19,7 @@ spec:
   template:
     spec:
       containers:
-      - image: public.ecr.aws/eks-anywhere/fluxcd/kustomize-controller:v0.26.3-eks-a-14
+      - image: public.ecr.aws/eks-anywhere/fluxcd/kustomize-controller:v0.26.3-eks-a-20
         name: manager
 ---
 apiVersion: apps/v1
@@ -31,7 +31,7 @@ spec:
   template:
     spec:
       containers:
-      - image: public.ecr.aws/eks-anywhere/fluxcd/helm-controller:v0.22.2-eks-a-14
+      - image: public.ecr.aws/eks-anywhere/fluxcd/helm-controller:v0.22.2-eks-a-20
         name: manager
 ---
 apiVersion: apps/v1
@@ -43,5 +43,5 @@ spec:
   template:
     spec:
       containers:
-      - image: public.ecr.aws/eks-anywhere/fluxcd/notification-controller:v0.24.1-eks-a-14
+      - image: public.ecr.aws/eks-anywhere/fluxcd/notification-controller:v0.24.1-eks-a-20
         name: manager
