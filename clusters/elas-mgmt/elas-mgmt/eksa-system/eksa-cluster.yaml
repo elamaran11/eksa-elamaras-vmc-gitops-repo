@@ -6,7 +6,7 @@ metadata:
 spec:
   bundlesRef:
     apiVersion: anywhere.eks.amazonaws.com/v1alpha1
-    name: bundles-14
+    name: bundles-20
     namespace: eksa-system
   clusterNetwork:
     cniConfig:
@@ -74,7 +74,7 @@ spec:
   numCPUs: 2
   osFamily: bottlerocket
   resourcePool: /SDDC-Datacenter/host/Cluster-1/Resources/Compute-ResourcePool
-  template: /SDDC-Datacenter/vm/Templates/bottlerocket-v1.23.7-kubernetes-1-23-eks-4-amd64-7d2448f
+  template: /SDDC-Datacenter/vm/Templates/bottlerocket-v1.23.12-kubernetes-1-23-eks-7-amd64-7243870
   users:
   - name: ec2-user
     sshAuthorizedKeys:
@@ -96,7 +96,7 @@ spec:
   numCPUs: 2
   osFamily: bottlerocket
   resourcePool: /SDDC-Datacenter/host/Cluster-1/Resources/Compute-ResourcePool
-  template: /SDDC-Datacenter/vm/Templates/bottlerocket-v1.23.7-kubernetes-1-23-eks-4-amd64-7d2448f
+  template: /SDDC-Datacenter/vm/Templates/bottlerocket-v1.23.12-kubernetes-1-23-eks-7-amd64-7243870
   users:
   - name: ec2-user
     sshAuthorizedKeys:
@@ -116,7 +116,7 @@ spec:
   numCPUs: 2
   osFamily: bottlerocket
   resourcePool: /SDDC-Datacenter/host/Cluster-1/Resources/Compute-ResourcePool
-  template: /SDDC-Datacenter/vm/Templates/bottlerocket-v1.23.7-kubernetes-1-23-eks-4-amd64-7d2448f
+  template: /SDDC-Datacenter/vm/Templates/bottlerocket-v1.23.12-kubernetes-1-23-eks-7-amd64-7243870
   users:
   - name: ec2-user
     sshAuthorizedKeys:
