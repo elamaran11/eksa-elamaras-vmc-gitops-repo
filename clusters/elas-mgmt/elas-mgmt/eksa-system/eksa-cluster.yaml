@@ -62,6 +62,26 @@ spec:
 apiVersion: anywhere.eks.amazonaws.com/v1alpha1
 kind: VSphereMachineConfig
 metadata:
+  name: elas-mgmt
+  namespace: default
+spec:
+  datastore: /SDDC-Datacenter/datastore/WorkloadDatastore
+  diskGiB: 25
+  folder: /SDDC-Datacenter/vm/Clusters/elamaras
+  memoryMiB: 8192
+  numCPUs: 2
+  osFamily: bottlerocket
+  resourcePool: /SDDC-Datacenter/host/Cluster-1/Resources/Compute-ResourcePool
+  template: /SDDC-Datacenter/vm/Templates/bottlerocket-v1.23.12-kubernetes-1-23-eks-7-amd64-7243870
+  users:
+  - name: ec2-user
+    sshAuthorizedKeys:
+    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCXx8GWLQyXT17OcoF6RetyFK6rBw6LHoiTfs2LcBFfVhXt/PiqK3bJhFMFJqKMKXX8O+MLbQgCQKdfg8acemcRr3WhArtjcGauqg01V4w8Wwy+vHYiQ5SuxNdnwUla2+wqezV31+NjYQI1wdJtqSuCupIpVukJ+HI8aAT2JZV9CVRwXT0JLKNc25P+xGe83rwYTg80juNammT0qQPpRKakG36ajAQwJ/oC4zqLmekXx5oHbY/8yCW2zHufmN34dHefCXY4Bk1D2mxEvXJZoZiH0IiqrALOWRgAw+sKppxZpyo6ASugcdV7M82jAeboN4h9HF4cJrKHafoDfq8QPkhtrOBlHyoGc6ZX7IzfldLIgxqQ/6j/YAGeK4g4n4zMwrj53oCHN6/thl/uSq/tzgPciRU7mg05TxIlnM/7gn6bHyGdtPPYwhmfnPPDiaV3EfMOBFfpVXjmDHl4ssZpP++01MU7xdNeYGPKMvzvwQ988VnRzHEaacSXuN0qgopxDBk=
+
+---
+apiVersion: anywhere.eks.amazonaws.com/v1alpha1
+kind: VSphereMachineConfig
+metadata:
   annotations:
     anywhere.eks.amazonaws.com/control-plane: "true"
   name: elas-mgmt-cp
@@ -87,26 +107,6 @@ metadata:
   annotations:
     anywhere.eks.amazonaws.com/etcd: "true"
   name: elas-mgmt-etcd
-  namespace: default
-spec:
-  datastore: /SDDC-Datacenter/datastore/WorkloadDatastore
-  diskGiB: 25
-  folder: /SDDC-Datacenter/vm/Clusters/elamaras
-  memoryMiB: 8192
-  numCPUs: 2
-  osFamily: bottlerocket
-  resourcePool: /SDDC-Datacenter/host/Cluster-1/Resources/Compute-ResourcePool
-  template: /SDDC-Datacenter/vm/Templates/bottlerocket-v1.23.12-kubernetes-1-23-eks-7-amd64-7243870
-  users:
-  - name: ec2-user
-    sshAuthorizedKeys:
-    - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCXx8GWLQyXT17OcoF6RetyFK6rBw6LHoiTfs2LcBFfVhXt/PiqK3bJhFMFJqKMKXX8O+MLbQgCQKdfg8acemcRr3WhArtjcGauqg01V4w8Wwy+vHYiQ5SuxNdnwUla2+wqezV31+NjYQI1wdJtqSuCupIpVukJ+HI8aAT2JZV9CVRwXT0JLKNc25P+xGe83rwYTg80juNammT0qQPpRKakG36ajAQwJ/oC4zqLmekXx5oHbY/8yCW2zHufmN34dHefCXY4Bk1D2mxEvXJZoZiH0IiqrALOWRgAw+sKppxZpyo6ASugcdV7M82jAeboN4h9HF4cJrKHafoDfq8QPkhtrOBlHyoGc6ZX7IzfldLIgxqQ/6j/YAGeK4g4n4zMwrj53oCHN6/thl/uSq/tzgPciRU7mg05TxIlnM/7gn6bHyGdtPPYwhmfnPPDiaV3EfMOBFfpVXjmDHl4ssZpP++01MU7xdNeYGPKMvzvwQ988VnRzHEaacSXuN0qgopxDBk=
-
----
-apiVersion: anywhere.eks.amazonaws.com/v1alpha1
-kind: VSphereMachineConfig
-metadata:
-  name: elas-mgmt
   namespace: default
 spec:
   datastore: /SDDC-Datacenter/datastore/WorkloadDatastore
